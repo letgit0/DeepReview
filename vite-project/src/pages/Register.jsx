@@ -28,6 +28,7 @@ export default function Register() {
         headers: {
           "Content-Type": "application/json",
         },
+        credentials: "include",
         body: JSON.stringify(form),
       });
 
@@ -36,10 +37,6 @@ export default function Register() {
       if (!res.ok) {
         throw new Error(data.message || "Registration failed");
       }
-
-      localStorage.setItem("token", data.token);
-      console.log('token set in localStorage:', data.token); // Debug log
-      console.log('data', data); // Debug log
 
       navigate("/dashboard", { replace: true });
     } catch (err) {
