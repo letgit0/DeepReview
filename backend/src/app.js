@@ -1,8 +1,10 @@
 import express from 'express';
+import connectDB from './config/db.js';
 import cors from 'cors';
 import aiRoutes from './routes/ai.routes.js';
 
 const app = express();
+await connectDB();
 
 app.get('/', (req, res) => {
     res.send('Hello World!');
