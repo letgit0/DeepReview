@@ -1,31 +1,12 @@
 import { Navigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useAuth } from "../context/authContext.jsx";
 
 function ProtectedRoute({ children }) {
-  const [loading, setLoading] = useState(true);
-  const [isAuth, setIsAuth] = useState(false);
+  const { isAuthenticated, loading } = useAuth();
 
-  useEffect(() => {
-    const checkAuth = async () => {
-      try {
-        const res = await fetch("http://localhost:3000/api/auth/profile", {
-          credentials: "include", 
-        });
+  if (loading) return <div>Loading...</div>;
 
-        setIsAuth(res.ok);
-      } catch (err) {
-        setIsAuth(false);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    checkAuth();
-  }, []);
-
-  if (loading) return null; // or spinner
-
-  if (!isAuth) {
+  if (!isAuthenticated) {
     return <Navigate to="/login" replace />;
   }
 

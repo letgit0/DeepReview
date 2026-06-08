@@ -4,16 +4,19 @@ import PublicRoute from "./routes/PublicRoute";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Home from "./pages/Home";
+import Dashboard from "./pages/Dashboard";
 
 function App() {
   return (
     <Routes>
-      <Route path="/" element={
-        <PublicRoute>
-          <Home />
-        </PublicRoute>
-        }   
-        />
+      <Route
+        path="/"
+        element={
+          <PublicRoute>
+            <Home />
+          </PublicRoute>
+        }
+      />
 
       <Route
         path="/login"
@@ -30,6 +33,15 @@ function App() {
           <PublicRoute>
             <Register />
           </PublicRoute>
+        }
+      />
+
+      <Route
+        path="/dashboard"
+        element={
+          <ProtectedRoute>
+            <Dashboard />
+          </ProtectedRoute>
         }
       />
     </Routes>
