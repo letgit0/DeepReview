@@ -1,11 +1,32 @@
-//Prevent logged-in users from seeing Login/Register
 import { Navigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 function PublicRoute({ children }) {
-  const token = localStorage.getItem("token");
+  const [loading, setLoading] = useState(true);
+  const [isAuth, setIsAuth] = useState(false);
 
-  if (token) {
-    return <Navigate to="/dashboard" />;
+  useEffect(() => {
+  const checkAuth = async () => {
+    try {
+      const res = await fetch("http://localhost:3000/api/auth/profile", {
+        credentials: "include",
+      });
+
+      setIsAuth(res.ok);
+    } catch (err) {
+      setIsAuth(false);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  checkAuth();
+}, []);
+
+  if (loading) return null; // or spinner
+
+  if (isAuth) {
+    return <Navigate to="/dashboard" replace />;
   }
 
   return children;
