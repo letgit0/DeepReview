@@ -29,21 +29,21 @@ export function AuthProvider({ children }) {
 }, []);
 
   const logout = async () => {
-    try {
-      await fetch("http://localhost:3000/api/auth/logout", {
-        method: "POST",
-        credentials: "include",
-      });
-      const res = await fetch("http://localhost:3000/api/auth/profile", {
-        credentials: "include",
-      });
-    } catch (error) {
-      console.error("Logout error:", error);
+  try {
+    const res = await fetch("http://localhost:3000/api/auth/logout", {
+      method: "POST",
+      credentials: "include",
+    });
+
+    if (!res.ok) {
+      throw new Error("Logout failed");
     }
-    finally {
-      setUser(null);
-    }
-  };
+
+    setUser(null);
+  } catch (error) {
+    console.error("Logout error:", error);
+  }
+};
   return (
     <AuthContext.Provider
       value={{

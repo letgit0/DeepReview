@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/authContext.jsx"
 
-export default function Register() {
+export default function Login() {
   const navigate = useNavigate();
   const { setUser } = useAuth();
   const [form, setForm] = useState({
@@ -24,7 +24,7 @@ export default function Register() {
     setError("");
 
     try {
-      const res = await fetch("http://localhost:3000/api/auth/register", {
+      const res = await fetch("http://localhost:3000/api/auth/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -36,7 +36,7 @@ export default function Register() {
       const data = await res.json();
 
       if (!res.ok) {
-        throw new Error(data.message || "Registration failed");
+        throw new Error(data.message || "Login failed");
       }
       setUser(data.user);
       navigate("/dashboard", { replace: true });
@@ -49,14 +49,13 @@ export default function Register() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-linear-to-br from-yellow-50 via-amber-50 to-yellow-200 px-4">
-      
       <div className="w-full max-w-md bg-white rounded-3xl shadow-xl p-8">
-
+        
         <h1 className="text-3xl font-extrabold text-center text-gray-900">
-          Create Account
+          Welcome Back
         </h1>
         <p className="text-center text-gray-500 mt-2">
-          Join DeepReview today
+          Login to DeepReview
         </p>
 
         {error && (
@@ -66,22 +65,7 @@ export default function Register() {
         )}
 
         <form onSubmit={handleSubmit} className="mt-6 space-y-4">
-
-          <div>
-            <label className="text-sm font-medium text-gray-700">
-              Name
-            </label>
-            <input
-              type="text"
-              name="name"
-              value={form.name}
-              onChange={handleChange}
-              placeholder="your name"
-              className="w-full mt-1 px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-yellow-400"
-              required
-            />
-          </div>
-
+          
           <div>
             <label className="text-sm font-medium text-gray-700">
               Email
@@ -117,17 +101,17 @@ export default function Register() {
             disabled={loading}
             className="w-full bg-yellow-400 hover:bg-yellow-500 text-black font-bold py-3 rounded-xl transition duration-300"
           >
-            {loading ? "Creating account..." : "Register"}
+            {loading ? "Logging in..." : "Login"}
           </button>
         </form>
 
         <p className="text-center text-sm text-gray-500 mt-6">
-          Already have an account?{" "}
+          Don’t have an account?{" "}
           <Link
-            to="/login"
+            to="/register"
             className="text-yellow-600 font-semibold hover:underline"
           >
-            Login
+            Register
           </Link>
         </p>
       </div>
