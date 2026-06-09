@@ -5,7 +5,7 @@ import cookieParser from 'cookie-parser';
 import aiRoutes from './routes/ai.routes.js';
 import authRoutes from './routes/authRoutes.js';
 import reviewRoutes from './routes/reviewRoutes.js'
-import {protect} from '../middleware/authMiddleware.js'
+import { protect } from './middleware/authMiddleware.js'
 
 const app = express();
 await connectDB();
