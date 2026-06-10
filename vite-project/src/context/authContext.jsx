@@ -6,44 +6,47 @@ export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
- useEffect(() => {
-  const loadUser = async () => {
+  useEffect(() => {
+    const loadUser = async () => {
+      try {
+        const res = await fetch("http://localhost:3000/api/auth/profile", {
+          credentials: "include",
+        });
 
+        if (!res.ok) {
+          setUser(null);
+          return;
+        }
+
+        const data = await res.json();
+        setUser(data.user);
+      } catch (err) {
+        console.error("Profile fetch error:", err);
+        setUser(null);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadUser();
+  }, []);
+
+  const logout = async () => {
     try {
-      const res = await fetch("http://localhost:3000/api/auth/profile", {
+      const res = await fetch("http://localhost:3000/api/auth/logout", {
+        method: "POST",
         credentials: "include",
       });
 
-      const data = await res.json();
+      if (!res.ok) {
+        throw new Error("Logout failed");
+      }
 
-      setUser(data.user || null);
-    } catch (err) {
-      console.log("Profile fetch error:", err);
       setUser(null);
-    } finally {
-      setLoading(false);
+    } catch (error) {
+      console.error("Logout error:", error);
     }
   };
-
-  loadUser();
-}, []);
-
-  const logout = async () => {
-  try {
-    const res = await fetch("http://localhost:3000/api/auth/logout", {
-      method: "POST",
-      credentials: "include",
-    });
-
-    if (!res.ok) {
-      throw new Error("Logout failed");
-    }
-
-    setUser(null);
-  } catch (error) {
-    console.error("Logout error:", error);
-  }
-};
   return (
     <AuthContext.Provider
       value={{

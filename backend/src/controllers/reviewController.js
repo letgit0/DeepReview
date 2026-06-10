@@ -4,7 +4,7 @@ import { getResponseFromGroq } from "../services/ai.services.js";
 export const createReview = async (req, res) => {
   const { code } = req.body;
   const aiResponse = await getResponseFromGroq(code);
-    console.log(req.user);
+    
   const review = await Review.create({
     userId: req.user._id,
     code,
