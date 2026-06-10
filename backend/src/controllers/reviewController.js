@@ -50,6 +50,23 @@ export const getUserReviews = async (req, res) => {
 
 };
 
-export const deleteReview = async () => {
+export const deleteReview = async (req, res) => {
+  try {
+    const deletedReview = await Review.findByIdAndDelete(req.params.id);
 
+    if (!deletedReview) {
+      return res.status(404).json({
+        message: "Review not found",
+      });
+    }
+
+    res.status(200).json({
+      message: "Review deleted successfully",
+      review: deletedReview,
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
+    });
+  }
 };
