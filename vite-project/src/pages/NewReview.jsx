@@ -11,8 +11,8 @@ export default function NewReview() {
   const navigate = useNavigate();
 
   const handleAnalyze = async () => {
-    if (!code.trim()) {
-      setError("Please paste some code before analyzing.");
+    if (!code.trim() || code.trim().length < 10) {
+      setError("Please provide valid source code");
       return;
     }
 

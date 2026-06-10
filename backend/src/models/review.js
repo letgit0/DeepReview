@@ -14,8 +14,14 @@ const reviewSchema = new mongoose.Schema(
     },
 
     analysis: {
-      type: String, 
-      required: true,
+      score: Number,
+      readability: Number,
+      maintainability: Number,
+      security: Number,
+      performance: Number,
+      strengths: [String],
+      weaknesses: [String],
+      suggestions: [String],
     }
   },
   { timestamps: true }

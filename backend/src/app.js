@@ -2,7 +2,6 @@ import express from 'express';
 import connectDB from './config/db.js';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
-import aiRoutes from './routes/ai.routes.js';
 import authRoutes from './routes/authRoutes.js';
 import reviewRoutes from './routes/reviewRoutes.js'
 import { protect } from './middleware/authMiddleware.js'
@@ -25,7 +24,6 @@ app.get('/', (req, res) => {
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use('/api/ai', aiRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/reviews', protect , reviewRoutes);
 
