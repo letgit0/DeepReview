@@ -1,20 +1,19 @@
-import axios from "axios";
+import { api } from "./api.js";
 
-const REVIEW_API_URL = "http://localhost:3000/api/reviews";
-
+// create review
 export const createReview = async (code) => {
-  const res = await axios.post(
-    `${REVIEW_API_URL}/`,
-    { code },
-    { withCredentials: true }
-  );
-
+  const res = await api.post("/reviews", { code });
   return res.data;
 };
 
-export const getReview = async ( id ) => {
-  const res = await axios.get(`${REVIEW_API_URL}/${id}`, {
-    withCredentials: true,
-  });
+// get single review
+export const getReview = async (id) => {
+  const res = await api.get(`/reviews/${id}`);
+  return res.data;
+};
+
+// get all user reviews
+export const getAllReviews = async () => {
+  const res = await api.get("/reviews/user");
   return res.data;
 };
