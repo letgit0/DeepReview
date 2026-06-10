@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getReview } from "../services/reviewService";
 import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
 export default function ReviewPage() {
   const { id } = useParams();
@@ -127,6 +128,8 @@ export default function ReviewPage() {
     </div>
 
   </div>
+
+  <Footer />
 </div>
 );
 }
