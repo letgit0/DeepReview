@@ -1,8 +1,8 @@
 import { api } from "./api.js";
 
 // create review
-export const createReview = async (code) => {
-  const res = await api.post("/reviews", { code });
+export const createReview = async ({code, fileName}) => {
+  const res = await api.post("/reviews", { code, fileName });
   return res.data;
 };
 

@@ -22,6 +22,10 @@ const reviewSchema = new mongoose.Schema(
       strengths: [String],
       weaknesses: [String],
       suggestions: [String],
+    },
+    fileName: {
+      type: String,
+      required: true,
     }
   },
   { timestamps: true }

@@ -11,6 +11,7 @@ export default function NewReview() {
 
   const navigate = useNavigate();
   const fileInputRef = useRef(null);
+  const fileNameRef = useRef("pasted-code");
 
   const handleAnalyze = async () => {
     if (!code.trim() || code.trim().length < 10) {
@@ -22,7 +23,10 @@ export default function NewReview() {
       setLoading(true);
       setError("");
 
-      const data = await createReview(code);
+      const data = await createReview({
+        code,
+        fileName: fileNameRef.current,
+      });
       const reviewId = data.reviewId;
 
       if (!reviewId) {
@@ -46,6 +50,7 @@ export default function NewReview() {
     const file = event.target.files[0];
 
     if (!file) return;
+    fileNameRef.current = file.name;
 
     const reader = new FileReader();
 
