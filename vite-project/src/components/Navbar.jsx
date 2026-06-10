@@ -1,4 +1,5 @@
 import { useAuth } from "../context/authContext.jsx";
+import { Link } from "react-router-dom";
 
 export default function Navbar() {
   const { logout } = useAuth();
@@ -6,9 +7,11 @@ export default function Navbar() {
   return (
     <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-yellow-100">
       <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-        <h1 className="text-2xl font-extrabold text-gray-900">
-          <span className="text-yellow-500">Deep</span>Review
-        </h1>
+        <Link to = '/'>
+          <h1 className="text-2xl font-extrabold text-gray-900">
+            <span className="text-yellow-500">Deep</span>Review
+          </h1>
+        </Link>
 
         <button
           onClick={logout}

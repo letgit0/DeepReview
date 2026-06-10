@@ -59,7 +59,7 @@ export default function Dashboard() {
             <p className="text-gray-500 text-sm">Total Reviews</p>
 
             <h3 className="mt-3 text-4xl font-bold text-gray-900">
-              {reviews?.length || 0}
+              {reviews?.length ?? "—"}
             </h3>
 
             <p className="mt-2 text-gray-400 text-sm">Reviews till now</p>
