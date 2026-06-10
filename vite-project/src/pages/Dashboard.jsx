@@ -34,7 +34,7 @@ export default function Dashboard() {
             </div>
 
             <Link
-              to="/review"
+              to="/review/new"
               className="px-8 py-4 bg-yellow-400 hover:bg-yellow-500 text-black font-bold rounded-2xl shadow-md transition"
             >
               + New Review
@@ -105,7 +105,7 @@ export default function Dashboard() {
             </p>
 
             <Link
-              to="/review"
+              to="/review/new"
               className="inline-block mt-6 px-6 py-3 bg-yellow-400 hover:bg-yellow-500 text-black font-semibold rounded-xl transition"
             >
               Create First Review
