@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import axios from "axios";
+import { getReview } from "../services/reviewService";
 import Navbar from "../components/Navbar";
 
 export default function ReviewPage() {
@@ -15,15 +15,12 @@ export default function ReviewPage() {
       try {
         setLoading(true);
 
-        const res = await axios.get(
-          `http://localhost:3000/api/reviews/${id}`,
-          { withCredentials: true }
-        );
-
-        setReview(res.data);
+        const data = await getReview (id);
+        
+        setReview(data);
       } catch (err) {
         setError(
-          err?.response?.data?.message ||
+          err?.data?.message ||
             "Failed to load review"
         );
       } finally {

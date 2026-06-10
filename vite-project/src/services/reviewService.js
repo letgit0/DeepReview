@@ -11,3 +11,10 @@ export const createReview = async (code) => {
 
   return res.data;
 };
+
+export const getReview = async ( id ) => {
+  const res = await axios.get(`${REVIEW_API_URL}/${id}`, {
+    withCredentials: true,
+  });
+  return res.data;
+};
