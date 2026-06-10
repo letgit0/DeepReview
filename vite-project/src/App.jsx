@@ -7,6 +7,7 @@ import Home from "./pages/Home";
 import Dashboard from "./pages/Dashboard";
 import NewReview from "./pages/NewReview"
 import ReviewPage from "./pages/ReviewPage";
+import History from "./pages/History";
 
 function App() {
   return (
@@ -61,6 +62,15 @@ function App() {
         element={
           <ProtectedRoute>
             <ReviewPage />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/history"
+        element={
+          <ProtectedRoute>
+            <History />
           </ProtectedRoute>
         }
       />
