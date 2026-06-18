@@ -1,4 +1,4 @@
-#  DeepReview — AI-Powered Code Intelligence System
+#  DeepReview — AI-Powered Engineering Feedback System
 
 DeepReview is a full-stack AI system that transforms raw source code into a **structured engineering quality report** using LLM-driven analysis.
 
@@ -48,7 +48,7 @@ Each analysis is generated under a **strictly enforced schema contract** to ensu
      Express.js Backend (REST API Layer)
    - JWT authentication
    - Request validation
-   - AI orchestration layer
+   - AI processing layer
                  │
      ┌───────────┼───────────────┐
      ▼           ▼               ▼
@@ -68,7 +68,7 @@ Code Input
    ↓
 Authentication Layer (JWT)
    ↓
-AI Orchestration Service
+AI Processing Layer
    ↓
 Groq LLM (Structured Prompt Execution)
    ↓
@@ -80,7 +80,7 @@ Frontend Dashboard Visualization
 ```
 Key design principle:
 
-The LLM is treated as a **controlled evaluation engine**, not a chatbot, using strict schema constraints to enforce deterministic output.
+The LLM is treated as a **controlled evaluation engine**, not a chatbot, using strict schema constraints to enforce consistent structured output.
 
 ---
 
@@ -148,13 +148,13 @@ Instead of free-form AI output, DeepReview enforces:
 - predictable fields
 - frontend-safe rendering format
 
-This makes the LLM behave like a **deterministic evaluation engine**.
+This ensures consistent and reliable structured output for frontend rendering.
 
 ## Engineering Highlights
 This project demonstrates:
 
 * LLM integration with **structured output control**
-* Real-world implementation of AI orchestration pipelines
+* Real-world implementation of AI-powered backend pipeline
 * Clean separation of backend concerns (controllers/services/middleware)
 * Stateless authentication architecture (JWT)
 * Persistent user-level analytics system (MongoDB)
