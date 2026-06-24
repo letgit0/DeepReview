@@ -3,29 +3,58 @@ import { getResponseFromGroq } from "../services/ai.services.js";
 import mongoose from "mongoose";
 
 export const createReview = async (req, res) => {
-  const { code, fileName } = req.body;
+  try {
+    const { code, fileName } = req.body;
 
-  if (!code || code.trim().length < 10) {
-    return res.status(400).json({
-      message: "Code too short"
+    if (!code || code.trim().length < 10) {
+      return res.status(400).json({ message: "Code too short" });
+    }
+
+    const aiResponse = await getResponseFromGroq(code);
+
+    let parsedResponse;
+
+    try {
+      parsedResponse = JSON.parse(aiResponse);
+    } catch (err) {
+      // fallback: try extracting JSON
+      const match = aiResponse.match(/\{[\s\S]*\}/);
+
+      if (match) {
+        try {
+          parsedResponse = JSON.parse(match[0]);
+        } catch {
+          return res.status(500).json({
+            message: "AI returned invalid JSON",
+            raw: aiResponse,
+          });
+        }
+      } else {
+        return res.status(500).json({
+          message: "AI response is not JSON",
+          raw: aiResponse,
+        });
+      }
+    }
+
+    if (parsedResponse?.error) {
+      return res.status(400).json({
+        message: parsedResponse.error,
+      });
+    }
+
+    const review = await Review.create({
+      userId: req.user._id,
+      code,
+      fileName,
+      analysis: parsedResponse,
     });
-  }
-  const aiResponse = await getResponseFromGroq(code);
-  const parsedResponse = JSON.parse(aiResponse);
 
-  if (parsedResponse.error) {
-    return res.status(400).json({
-      message: parsedResponse.error
-    });
+    return res.json({ reviewId: review._id });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ message: "Internal server error" });
   }
-
-  const review = await Review.create({
-    userId: req.user._id,
-    code,
-    fileName,
-    analysis: parsedResponse,
-  });
-  res.json({ reviewId: review._id });
 };
 
 export const getReview = async (req, res) => {
@@ -39,15 +68,16 @@ export const getReview = async (req, res) => {
 };
 
 export const getUserReviews = async (req, res) => {
-
-  const allReviews = await Review.find({ userId: new mongoose.Types.ObjectId(req.user._id) }, { "analysis.score": 1, _id: 1, fileName: 1, createdAt: 1}).sort({ createdAt: -1 });
+  const allReviews = await Review.find(
+    { userId: new mongoose.Types.ObjectId(req.user._id) },
+    { "analysis.score": 1, _id: 1, fileName: 1, createdAt: 1 },
+  ).sort({ createdAt: -1 });
 
   if (!allReviews) {
     return res.status(404).json({ message: "No Reviews yet" });
   }
 
   res.json(allReviews);
-
 };
 
 export const deleteReview = async (req, res) => {
