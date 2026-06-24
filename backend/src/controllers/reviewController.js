@@ -1,4 +1,4 @@
-import Review from "../models/Review.js";
+import Review from "../models/review.js";
 import { getResponseFromGroq } from "../services/ai.services.js";
 import mongoose from "mongoose";
 
